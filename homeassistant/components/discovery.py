@@ -37,6 +37,7 @@ SERVICE_WINK = 'wink'
 SERVICE_XIAOMI_GW = 'xiaomi_gw'
 SERVICE_TELLDUSLIVE = 'tellstick'
 SERVICE_HUE = 'philips_hue'
+SERVICE_KONNECTED = 'konnected'
 
 SERVICE_HANDLERS = {
     SERVICE_HASS_IOS_APP: ('ios', None),
@@ -50,6 +51,7 @@ SERVICE_HANDLERS = {
     SERVICE_XIAOMI_GW: ('xiaomi_aqara', None),
     SERVICE_TELLDUSLIVE: ('tellduslive', None),
     SERVICE_HUE: ('hue', None),
+    SERVICE_KONNECTED: ('konnected', None),
     'google_cast': ('media_player', 'cast'),
     'panasonic_viera': ('media_player', 'panasonic_viera'),
     'plex_mediaserver': ('media_player', 'plex'),
@@ -151,6 +153,8 @@ def async_setup(hass, config):
 
 def _discover(netdisco):
     """Discover devices."""
+    # FIXME FIXME FIXME delete:
+    return [('konnected', {'model_number': '2.1.0', 'name': 'Mock Konnected', 'model_name': 'Konnected', 'port': 19600, 'host': '127.0.0.1', 'ssdp_description': 'http://127.0.0.1:19600/Device.xml', 'serial': '12345'})]
     results = []
     try:
         netdisco.scan()
@@ -158,6 +162,7 @@ def _discover(netdisco):
         for disc in netdisco.discover():
             for service in netdisco.get_info(disc):
                 results.append((disc, service))
+
     finally:
         netdisco.stop()
 
